@@ -76,26 +76,36 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: blanchedalmond;
 }
 
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 256px);
-  grid-template-rows: repeat(3, 256px);
+  grid-template-columns: repeat(3, 128px);
+  grid-template-rows: repeat(3, 128px);
   /* margin: 10px; */
   /* gap: 10px; */
-  border: 5px solid #333;
-  background-color: #8b4513;
+  border: 1px solid white;
+  background-color: black;
 }
 
 .tile {
-  background-image: url('./images/old-white-wood-256x256.png');
-  border: 2px solid #654321;
-  margin: 10px;
+  background-image: url(./images/blackboard.png);
+  border: 2px solid whitesmoke;
+  /* margin: 10px; */
 }
 
 .tile:hover {
-  opacity: 0.9;
+  /* opacity: ; */
+}
+
+#puff {
+    cursor:pointer;
+    display:none;
+    position:absolute;
+    height:32px;
+    width:32px;
+    background: url('./images/Smoke.png') no-repeat;
 }
 
 
