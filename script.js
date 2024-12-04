@@ -36,20 +36,14 @@ const animateSmoke = (() => {
   });
 })();
 
-const gameboard = () => {
-  boardMap = {};
-  for (let i = 0; i <= 8; i++) {
-    boardMap[i] = null;
-  }
-
+const gameboard = (player1, player2) => {
   function checkWinner(player) {
     for (let win of WINNING_COMBINATIONS) {
       if ((player.bitmask & win) === win) { return true; }
     }
     return false;
-  }
-
-  const findWinner = (player1, player2) => {
+  };
+  const findWinner = () => {
     const WINNING_COMBINATIONS = [
       0b111000000, // Row 1
       0b000111000, // Row 2
@@ -68,8 +62,31 @@ const gameboard = () => {
     } else {
       return null;
     }
-  }
+  };
   const checkDraw = () => {
     return 0b111111111 === player1.bitmask | player2.bitmask
+  };
+
+  let board = {}
+  for (let i = 0; i < 9; i++) {
+    board[i] = null;
+  }
+
+  const resetBoard = () => {
+    player1.setBitmask = 0
+    player2.setBitmask = 0
+  };
+  const updateBoard = (cell, player) => {
+    player.bitmask | (1 << cell);
   }
 };
+
+const Player = (name, symbol) => {
+  let bitmask = 0b000000000;
+  let name = name;
+  let symbol = symbol;
+}
+
+const TicTacToe = (() => {
+
+})();
