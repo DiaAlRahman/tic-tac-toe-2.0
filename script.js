@@ -86,7 +86,7 @@ const TicTacToe = (() => {
 
     const checkDraw = () => {
       // return 0b111111111 === 0b111111111;
-      return 0b111111111 === player1.getBitmask() | player2.getBitmask()
+      return 0b111111111 === (player1.getBitmask() | player2.getBitmask());
     };
 
     let board = {};
@@ -112,24 +112,27 @@ const TicTacToe = (() => {
     return { findWinner, checkDraw, resetBoard, updateBoard, showBoard }
   })(px, po);
 
-
-  xpos = 0
+  drawGame = [0, 1, 2, 3, 5, 4, 6, 8, 7];
+  winX = [0, 8, 1, 6, 2];
+  winO = [0, 6, 1, 7, 3, 8];
   for (let i = 0; i < 9; i++) {
     if (i % 2 === 0) {
-      gameboard.updateBoard(xpos++, px);
+      gameboard.updateBoard(winO[i], px);
     } else {
-      gameboard.updateBoard(8 - i, po)
+      gameboard.updateBoard(winO[i], po)
     }
     console.log(gameboard.showBoard());
     winner = gameboard.findWinner()
     if (winner !== null) {
       console.log(winner.name + ' wins!');
       i = 9;
+    } else {
+      if (gameboard.checkDraw()) {
+        console.log("Draw!")
+      };
     };
   }
   // console.log(gameboard.checkDraw())
-  // if (gameboard.checkDraw()) {
-  //   console.log("Draw!")
-  // }
+
 
 })();
