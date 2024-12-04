@@ -43,7 +43,7 @@ const Player = (name, symbol) => {
   };
   const makeMove = (cell) => {
     bitmask = bitmask | (1 << cell);
-    console.log(name, bitmask)
+    // console.log(name, bitmask.toString(2))
   };
 
   const getBitmask = () => bitmask;
@@ -69,15 +69,15 @@ const TicTacToe = (() => {
         0b001010100  // Diagonal 2
       ];
       for (let win of WINNING_COMBINATIONS) {
-        if ((player.bitmask & win) === win) { return true; }
+        if ((player.getBitmask() & win) === win) { return true; }
       }
       return false;
     };
 
     const findWinner = () => {
-      if (checkWinner(player1.getBitmask())) {
+      if (checkWinner(player1)) {
         return player1;
-      } else if (checkWinner(player2.getBitmask())) {
+      } else if (checkWinner(player2)) {
         return player2;
       } else {
         return null;
@@ -120,14 +120,16 @@ const TicTacToe = (() => {
     } else {
       gameboard.updateBoard(8 - i, po)
     }
-
-    winner = gameboard.findWinner()
-    if (winner !== null) { console.log(winner.name + 'wins!') };
     console.log(gameboard.showBoard());
+    winner = gameboard.findWinner()
+    if (winner !== null) {
+      console.log(winner.name + ' wins!');
+      i = 9;
+    };
   }
   // console.log(gameboard.checkDraw())
-  if (gameboard.checkDraw()) {
-    console.log("Draw!")
-  }
+  // if (gameboard.checkDraw()) {
+  //   console.log("Draw!")
+  // }
 
 })();
