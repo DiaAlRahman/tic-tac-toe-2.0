@@ -43,6 +43,7 @@ const Player = (name, symbol) => {
   };
   const makeMove = (cell) => {
     bitmask = bitmask | (1 << cell);
+    console.log(name, bitmask)
   };
 
   const getBitmask = () => bitmask;
