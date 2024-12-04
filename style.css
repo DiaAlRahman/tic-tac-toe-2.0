@@ -95,10 +95,6 @@ body {
   /* margin: 10px; */
 }
 
-.tile:hover {
-  /* opacity: ; */
-}
-
 #puff {
     cursor:pointer;
     display:none;
@@ -107,6 +103,7 @@ body {
     width:32px;
     background: url('./images/Smoke.png') no-repeat;
 }
+
 
 
 

@@ -36,14 +36,40 @@ const animateSmoke = (() => {
   });
 })();
 
+const gameboard = () => {
+  boardMap = {};
+  for (let i = 0; i <= 8; i++) {
+    boardMap[i] = null;
+  }
 
+  function checkWinner(player) {
+    for (let win of WINNING_COMBINATIONS) {
+      if ((player.bitmask & win) === win) { return true; }
+    }
+    return false;
+  }
 
-//   var xOffset = 24;
-//   var yOffset = 24;
-//   // $(this).fadeOut('fast');
-//   $('#puff').css({
-//     left: e.pageX - xOffset + 'px',
-//     top: e.pageY - yOffset + 'px'
-//   }).show();
-//   animatePoof();
-// });
+  const findWinner = (player1, player2) => {
+    const WINNING_COMBINATIONS = [
+      0b111000000, // Row 1
+      0b000111000, // Row 2
+      0b000000111, // Row 3
+      0b100100100, // Column 1
+      0b010010010, // Column 2
+      0b001001001, // Column 3
+      0b100010001, // Diagonal 1
+      0b001010100  // Diagonal 2
+    ];
+
+    if (checkWinner(player1.bitmask)) {
+      return player1;
+    } else if (checkWinner(player2.bitmask)) {
+      return player2;
+    } else {
+      return null;
+    }
+  }
+  const checkDraw = () => {
+    return 0b111111111 === player1.bitmask | player2.bitmask
+  }
+};
