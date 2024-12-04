@@ -36,61 +36,87 @@ const animateSmoke = (() => {
   });
 })();
 
-const gameboard = (player1, player2) => {
-  function checkWinner(player) {
-    for (let win of WINNING_COMBINATIONS) {
-      if ((player.bitmask & win) === win) { return true; }
-    }
-    return false;
-  };
-  const findWinner = () => {
-    const WINNING_COMBINATIONS = [
-      0b111000000, // Row 1
-      0b000111000, // Row 2
-      0b000000111, // Row 3
-      0b100100100, // Column 1
-      0b010010010, // Column 2
-      0b001001001, // Column 3
-      0b100010001, // Diagonal 1
-      0b001010100  // Diagonal 2
-    ];
-
-    if (checkWinner(player1.getBitmask())) {
-      return player1;
-    } else if (checkWinner(player2.getBitmask())) {
-      return player2;
-    } else {
-      return null;
-    }
-  };
-  const checkDraw = () => {
-    return 0b111111111 === player1.getBitmask | player2.getBitmask
-  };
-
-  let board = {}
-  for (let i = 0; i < 9; i++) {
-    board[i] = null;
-  }
-
-  const resetBoard = () => {
-    player1.setBitmask = 0
-    player2.setBitmask = 0
-  };
-  const updateBoard = (cell, player) => {
-    player.setBitmask(player.bitmask | (1 << cell));
-  }
-};
-
 const Player = (name, symbol) => {
   let name = name;
   let symbol = symbol;
   let bitmask = 0b000000000;
   const setBitmask = (newBitmask) => {
     bitmask = newBitmask;
-  }
+  };
+  const makeMove = (cell, player) => {
+    player.bitmask = player.bitmask | (1 << cell);
+  };
+
   const getBitmask = () => bitmask;
+
+  return { name, symbol, setBitmask, getBitmask, makeMove };
 }
 
 const TicTacToe = (() => {
+  const px = Player('Dia', 'X'), po = Player('Nuery', 'O');
+
+
+  const gameboard = ((player1, player2) => {
+
+    function checkWinner(player) {
+      for (let win of WINNING_COMBINATIONS) {
+        if ((player.bitmask & win) === win) { return true; }
+      }
+      return false;
+    };
+
+    const findWinner = () => {
+      const WINNING_COMBINATIONS = [
+        0b111000000, // Row 1
+        0b000111000, // Row 2
+        0b000000111, // Row 3
+        0b100100100, // Column 1
+        0b010010010, // Column 2
+        0b001001001, // Column 3
+        0b100010001, // Diagonal 1
+        0b001010100  // Diagonal 2
+      ];
+
+      if (checkWinner(player1.getBitmask())) {
+        return player1;
+      } else if (checkWinner(player2.getBitmask())) {
+        return player2;
+      } else {
+        return null;
+      }
+    };
+
+    const checkDraw = () => {
+      return 0b111111111 === player1.getBitmask | player2.getBitmask
+    };
+
+    let board = {};
+    function createBoard() {
+      for (let i = 0; i < 9; i++) {
+        board[i] = null;
+      }
+    };
+    createBoard();
+
+    const resetBoard = () => {
+      player1.setBitmask(0);
+      player2.setBitmask(0);
+      createBoard();
+    };
+
+    const updateBoard = (player) => {
+      board[cell] = player.symbol;
+    }
+    return { findWinner, checkDraw, resetBoard, updateBoard }
+  })(px, po);
+
+
+  for (let i = 0; i < 9; i++) {
+    if (i % 2 == 0) {
+      gameboard.updateBoard(i, px)
+    } else {
+      gameboard.updateBoard(8 - i, p0)
+    }
+  }
 
 })();
