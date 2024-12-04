@@ -55,16 +55,16 @@ const gameboard = (player1, player2) => {
       0b001010100  // Diagonal 2
     ];
 
-    if (checkWinner(player1.bitmask)) {
+    if (checkWinner(player1.getBitmask())) {
       return player1;
-    } else if (checkWinner(player2.bitmask)) {
+    } else if (checkWinner(player2.getBitmask())) {
       return player2;
     } else {
       return null;
     }
   };
   const checkDraw = () => {
-    return 0b111111111 === player1.bitmask | player2.bitmask
+    return 0b111111111 === player1.getBitmask | player2.getBitmask
   };
 
   let board = {}
@@ -77,14 +77,18 @@ const gameboard = (player1, player2) => {
     player2.setBitmask = 0
   };
   const updateBoard = (cell, player) => {
-    player.bitmask | (1 << cell);
+    player.setBitmask(player.bitmask | (1 << cell));
   }
 };
 
 const Player = (name, symbol) => {
-  let bitmask = 0b000000000;
   let name = name;
   let symbol = symbol;
+  let bitmask = 0b000000000;
+  const setBitmask = (newBitmask) => {
+    bitmask = newBitmask;
+  }
+  const getBitmask = () => bitmask;
 }
 
 const TicTacToe = (() => {
