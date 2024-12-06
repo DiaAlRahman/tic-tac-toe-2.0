@@ -133,15 +133,20 @@ const TicTacToe = ((px, po) => {
       }
     };
 
-    const showMessage = () => {
-
+    const showMessage = (message) => {
+      messageBody = document.querySelector('.game-over');
+      messageBody.textContent = message;
+      messageBody.classList.add('active');
+      document.querySelector('.board').classList.add('blur');
     }
-    return { updateBoard };
+    return { updateBoard, showMessage };
   })();
 
-  let round = 0, gameOver = false;
+  let round = 0, gameOver = false, message;
   const runGame = (i) => {
-    if (gameOver) { return; }
+    if (gameOver) {
+      return;
+    }
 
     let isUpdate = false, player;
     if (round % 2 == 0) { player = px; } else { player = po; };
@@ -156,14 +161,15 @@ const TicTacToe = ((px, po) => {
 
     winner = gameboard.findWinner()
     if (winner !== null) {
-      console.log(winner.name + ' wins!');
+      message = winner.name + ' wins!';
       gameOver = true
     } else {
       if (gameboard.checkDraw()) {
-        console.log("Draw!");
+        message = "Draw!";
         gameOver = true
       };
     };
+    if (gameOver) { displayController.showMessage(message); }
 
   };
   // console.log(gameboard.checkDraw())
