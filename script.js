@@ -240,6 +240,3 @@ const Init = (() => {
 
   startButton.addEventListener('click', startGame);
 })();
-
-
-// const game = TicTacToe(px, po);
