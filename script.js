@@ -210,9 +210,18 @@ const Init = (() => {
   const xPlayer = document.querySelector('#x-player');
   const oPlayer = document.querySelector('#o-player');
 
+  const getPlayerNames = () => {
+    let namex = 'Joe', nameo = 'Mama';
+    if (xPlayer.value) { namex = xPlayer.value };
+    if (oPlayer.value) { nameo = oPlayer.value };
+
+    return [namex, nameo];
+  }
+
   const startGame = () => {
     form.style.display = 'none';
-    let px = Player(xPlayer.value, 'X'), po = Player(oPlayer.value, 'O');
+    names = getPlayerNames()
+    let px = Player(names[0], 'X'), po = Player(names[1], 'O');
     TicTacToe(px, po);
   }
 
