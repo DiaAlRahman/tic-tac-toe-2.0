@@ -1,40 +1,40 @@
-// const animateSmoke = (() => {
-//   function animatePoof() {
-//     var bgTop = 0,
-//       frame = 0,
-//       frames = 6,
-//       frameSize = 32,
-//       frameRate = 160;
-//     let puff = document.getElementById('puff');
+const animateSmoke = (() => {
+  function animatePoof() {
+    var bgTop = 0,
+      frame = 0,
+      frames = 6,
+      frameSize = 32,
+      frameRate = 160;
+    let puff = document.getElementById('puff');
 
-//     var animate = function () {
-//       if (frame < frames) {
-//         puff.style.backgroundPosition = "0 " + bgTop + "px";
-//         bgTop = bgTop - frameSize;
-//         frame++;
-//         setTimeout(animate, frameRate);
-//       }
-//     };
+    var animate = function () {
+      if (frame < frames) {
+        puff.style.backgroundPosition = "0 " + bgTop + "px";
+        bgTop = bgTop - frameSize;
+        frame++;
+        setTimeout(animate, frameRate);
+      }
+    };
 
-//     animate();
-//     setTimeout(() => {
-//       puff.style.display = 'none';
-//     }, frames * frameRate);
-//   }
+    animate();
+    setTimeout(() => {
+      puff.style.display = 'none';
+    }, frames * frameRate);
+  }
 
-//   let tiles = document.querySelectorAll('.tile');
-//   tiles.forEach(tile => {
-//     tile.addEventListener('click', (e) => {
-//       var xOffset = 24;
-//       var yOffset = 24;
-//       let puff = document.getElementById('puff');
-//       puff.style.left = (e.pageX - xOffset) + 'px';
-//       puff.style.top = (e.pageY - yOffset) + 'px';
-//       puff.style.display = 'block';
-//       animatePoof();
-//     });
-//   });
-// })();
+  let tiles = document.querySelectorAll('.tile');
+  tiles.forEach(tile => {
+    tile.addEventListener('click', (e) => {
+      var xOffset = 24;
+      var yOffset = 24;
+      let puff = document.getElementById('puff');
+      puff.style.left = (e.pageX - xOffset) + 'px';
+      puff.style.top = (e.pageY - yOffset) + 'px';
+      puff.style.display = 'block';
+      animatePoof();
+    });
+  });
+})();
 
 const Player = (name, symbol) => {
   let bitmask = 0b000000000;
@@ -51,10 +51,7 @@ const Player = (name, symbol) => {
   return { name, symbol, setBitmask, getBitmask, makeMove };
 }
 
-const TicTacToe = (() => {
-  const px = Player('Dia', 'X'), po = Player('Nuery', 'O');
-
-
+const TicTacToe = ((px, po) => {
   const gameboard = ((player1, player2) => {
 
     function checkWinner(player) {
@@ -104,35 +101,63 @@ const TicTacToe = (() => {
     };
 
     const updateBoard = (cell, player) => {
-      board[cell] = player.symbol;
-      player.makeMove(cell);
+      if (board[cell] === null) {
+        board[cell] = player.symbol;
+        player.makeMove(cell);
+        return true;
+      }
+      return false;
     };
 
-    const showBoard = () => board;
+    const showBoard = () => {
+      return [board[0], board[1], board[2]] + '\n' + [board[3], board[4], board[5]] + '\n' + [board[6], board[7], board[8]]
+    };
+
     return { findWinner, checkDraw, resetBoard, updateBoard, showBoard }
   })(px, po);
+  const displayController = (() => {
+    // console.log('in')
+    tiles = document.querySelectorAll('.tile')
+    // console.log(tiles)
+    for (let i = 0; i < tiles.length; i++) {
+      tiles[i].addEventListener('click', () => {
+        runGame(i);
+      });
 
-  drawGame = [0, 1, 2, 3, 5, 4, 6, 8, 7];
-  winX = [0, 8, 1, 6, 2];
-  winO = [0, 6, 1, 7, 3, 8];
-  for (let i = 0; i < 9; i++) {
-    if (i % 2 === 0) {
-      gameboard.updateBoard(winO[i], px);
-    } else {
-      gameboard.updateBoard(winO[i], po)
+
+
+      // return { getPosition };
     }
+  })();
+
+  let round = 0
+  const runGame = (i) => {
+    let isUpdate = false;
+    if (round % 2 == 0) {
+      isUpdate = gameboard.updateBoard(i, px);
+    } else {
+      isUpdate = gameboard.updateBoard(i, po);
+    };
+    if (isUpdate) { round++; }
     console.log(gameboard.showBoard());
     winner = gameboard.findWinner()
     if (winner !== null) {
       console.log(winner.name + ' wins!');
-      i = 9;
     } else {
       if (gameboard.checkDraw()) {
-        console.log("Draw!")
+        console.log("Draw!");
       };
     };
-  }
+  };
   // console.log(gameboard.checkDraw())
+  const resetGame = () => {
+    gameboard.resetBoard()
+    round = 0
+  }
 
+  return { runGame, resetGame }
+});
 
-})();
+const px = Player('Dia', 'X'), po = Player('Nuery', 'O');
+const game = TicTacToe(px, po);
+// game.resetGame();
