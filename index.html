@@ -11,7 +11,7 @@
 
 <body>
   <header>Vintage Noughts and Crosses</header>
-  <div id="form">
+  <div id="form" class="activate-general">
     <div>
       <label for="x-player">X:</label>
       <input type="text" id="x-player" name="x-player" placeholder="Thou Shalt Be Cross">
@@ -25,8 +25,7 @@
     </div>
   </div>
 
-
-  <div class="board ">
+  <div class="board">
     <div id="puff"></div>
     <div class="tile" id="tile-0"></div>
     <div class="tile" id="tile-1"></div>
@@ -38,9 +37,12 @@
     <div class="tile" id="tile-7"></div>
     <div class="tile" id="tile-8"></div>
   </div>
+  <button type="button" class="restart">Restart</button>
   <div class="game-over">
     <button type="reset" id="reset">Reset</button>
   </div>
+
+
 
 </body>
 

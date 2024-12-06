@@ -178,7 +178,6 @@ header {
 }
 
 #form {
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -201,7 +200,7 @@ header {
   padding: 0 0.5rem 0 1rem;
 }
 
-#form button {
+button {
   border-radius: 1rem;
   padding: 0 1rem 0 1rem;
   margin-top: 2rem;
@@ -209,13 +208,35 @@ header {
   border: none;
 }
 
-#form button:hover {
+button:hover {
   box-shadow: 0 0 25px white;
 }
 
-#form button:active {
+button:active {
   box-shadow: none;
 }
+
+.restart {
+  display: none;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.5rem;
+}
+
+.activate-general {
+  display: flex;
+  animation: 1.5s fadeInUp;
+}
+
+.activate-restart {
+  display: flex;
+  animation: 20s fadeInUp;
+}
+
+.hide {
+  display: none;
+}
+
+
 
 
 

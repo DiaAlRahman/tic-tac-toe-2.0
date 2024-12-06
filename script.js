@@ -118,10 +118,15 @@ const TicTacToe = ((px, po) => {
     const tiles = document.querySelectorAll('.tile');
     const messageBody = document.querySelector('.game-over');
     const resetButton = document.querySelector('#reset');
+    const restartButton = document.querySelector('.restart');
     const board = document.querySelector('.board');
+    const form = document.querySelector('#form');
 
     // activate board
+    form.classList.add('hide');
+    form.classList.remove('activate-general');
     board.classList.add('activate-board');
+    restartButton.classList.add('activate-restart');
 
     // getPosition of tile
     for (let i = 0; i < tiles.length; i++) {
@@ -160,8 +165,18 @@ const TicTacToe = ((px, po) => {
       messageBody.prepend(p);
       messageBody.classList.add('active');
       board.classList.add('blur');
-    }
-    return { updateBoard, showMessage };
+    };
+
+    const restartGame = () => {
+      displayController.resetBoard();
+      board.classList.remove('activate-board');
+      restartButton.classList.remove('activate-restart');
+      form.classList.remove('hide');
+      form.classList.add('activate-general');
+    };
+    restartButton.addEventListener('click', restartGame);
+
+    return { updateBoard, resetBoard, showMessage };
   })();
 
   let round = 0, gameOver = false, message;
@@ -199,13 +214,12 @@ const TicTacToe = ((px, po) => {
     gameboard.resetBoard()
     round = 0
     gameOver = false
-  }
+  };
 
   return { runGame, resetGame }
 });
 
 const Init = (() => {
-  const form = document.querySelector('#form');
   const startButton = document.querySelector('#form button');
   const xPlayer = document.querySelector('#x-player');
   const oPlayer = document.querySelector('#o-player');
@@ -219,7 +233,6 @@ const Init = (() => {
   }
 
   const startGame = () => {
-    form.style.display = 'none';
     names = getPlayerNames()
     let px = Player(names[0], 'X'), po = Player(names[1], 'O');
     TicTacToe(px, po);
