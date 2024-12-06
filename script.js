@@ -152,7 +152,7 @@ const TicTacToe = ((px, po) => {
       displayController.updateBoard(i, player.symbol);
     }
 
-    console.log(gameboard.showBoard());
+    // console.log(gameboard.showBoard());
 
     winner = gameboard.findWinner()
     if (winner !== null) {

@@ -108,13 +108,19 @@ body {
 #game-over {
   position: absolute;
   top: 30vh;
-  display: flex;
+  display: none;
   justify-self: center;
   color: whitesmoke;
   font-family: 'Courier New', Courier, monospace;
   font-size: 2rem;
   font-weight: 700;
   z-index: 1000;
+  -webkit-animation: focus-in-expand 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	animation: focus-in-expand 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+#game-over.active{
+  display: flex;
 }
 
 .board.blur {
