@@ -6,11 +6,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
   <script src="./script.js" defer></script>
-  <title>Vintage Tic-Tac-Toe</title>
+  <title>Vintage Noughts and Crosses</title>
 </head>
 
 <body>
-  <div class="board">
+  <header>Vintage Noughts and Crosses</header>
+  <div id="form">
+    <div>
+      <label for="x-player">X:</label>
+      <input type="text" id="x-player" name="x-player" placeholder="Thou Shalt Be Cross">
+    </div>
+    <div>
+      <label for="o-player">O:</label>
+      <input type="text" id="o-player" name="o-player" placeholder="Thou Shalt Be Nought">
+    </div>
+    <div>
+      <button type="button" id="start-game">Start Game</button>
+    </div>
+  </div>
+
+
+  <div class="board ">
     <div id="puff"></div>
     <div class="tile" id="tile-0"></div>
     <div class="tile" id="tile-1"></div>
@@ -22,7 +38,9 @@
     <div class="tile" id="tile-7"></div>
     <div class="tile" id="tile-8"></div>
   </div>
-  <div class="game-over"></div>
+  <div class="game-over">
+    <button type="reset" id="reset">Reset</button>
+  </div>
 
 </body>
 

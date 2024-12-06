@@ -72,28 +72,63 @@ textarea:not([rows]) {
   scroll-margin-block: 5ex;
 }
 
+p {
+  margin: 0;
+}
+
 body {
   display: flex;
-  justify-content: center;
-  align-items: baseline;
-  background-color: blanchedalmond;
+  justify-content: baseline;
+  align-items: center;
+  flex-direction: column;
+  background-color: black;
+}
+
+header {
+  font-size: 4rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 900;
+  color: whitesmoke;
+  text-shadow: 0 0 35px whitesmoke;
 }
 
 .board {
-  display: grid;
+  display: none;
   grid-template-columns: repeat(3, 128px);
   grid-template-rows: repeat(3, 128px);
-  margin-top: 8rem;
+  margin-top: 3rem;
   /* gap: 10px; */
-  border: 1px solid white;
+  /* border: 1px solid white; */
   background-color: black;
+}
+
+.activate-board{
+  display: grid;
+  animation: 1.5s fadeInUp;
 }
 
 .tile {
   background-image: url(./images/blackboard.png);
-  border: 2px solid whitesmoke;
+  border: 1px solid whitesmoke;
   cursor: pointer;
   /* margin: 10px; */
+}
+
+#tile-0, #tile-1, #tile-2 {
+  border-top: none;
+}
+#tile-0, #tile-3, #tile-6 {
+  border-left: none;
+}
+#tile-6, #tile-7, #tile-8 {
+  border-bottom: none;
+}
+#tile-2, #tile-5, #tile-8 {
+  border-right: none;
+}
+
+.tile:hover{
+  box-shadow: 0 0 20px whitesmoke;
 }
 
 #puff {
@@ -129,14 +164,57 @@ body {
   }
 }
 
-.active{
+.game-over.active{
   display: flex;
   animation: 1.5s fadeInUp;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .board.blur {
   filter: blur(15px);
   pointer-events: none;
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+  margin-top: 3vh;
+  font-size: 2rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#form label {
+  text-shadow: 0 0 100px whitesmoke;
+  /* font-size: 100px; */
+}
+
+#form input {
+  outline: none;
+  border: 2px solid white;
+  border-radius: 1rem;
+  padding: 0 0.5rem 0 1rem;
+}
+
+#form button {
+  border-radius: 1rem;
+  padding: 0 1rem 0 1rem;
+  margin-top: 2rem;
+  background-color: white;
+  border: none;
+}
+
+#form button:hover {
+  box-shadow: 0 0 25px white;
+}
+
+#form button:active {
+  box-shadow: none;
 }
 
 

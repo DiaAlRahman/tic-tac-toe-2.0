@@ -53,7 +53,6 @@ const Player = (name, symbol) => {
 
 const TicTacToe = ((px, po) => {
   const gameboard = ((player1, player2) => {
-
     function checkWinner(player) {
       const WINNING_COMBINATIONS = [
         0b111000000, // Row 1
@@ -116,7 +115,14 @@ const TicTacToe = ((px, po) => {
     return { findWinner, checkDraw, resetBoard, updateBoard, showBoard }
   })(px, po);
   const displayController = (() => {
-    tiles = document.querySelectorAll('.tile')
+    const tiles = document.querySelectorAll('.tile');
+    const messageBody = document.querySelector('.game-over');
+    const resetButton = document.querySelector('#reset');
+    const board = document.querySelector('.board');
+
+    // activate board
+    board.classList.add('activate-board');
+
     // getPosition of tile
     for (let i = 0; i < tiles.length; i++) {
       tiles[i].addEventListener('click', () => {
@@ -133,11 +139,27 @@ const TicTacToe = ((px, po) => {
       }
     };
 
+    const resetBoard = () => {
+      resetGame()
+      for (let i = 0; i < tiles.length; i++) {
+        tiles[i].style.backgroundImage = "url(./images/blackboard.png)";
+      }
+      messageText = document.querySelector('.game-over-message');
+      if (messageText) {
+        messageBody.removeChild(messageText);
+      }
+      messageBody.classList.remove('active');
+      board.classList.remove('blur');
+    }
+    resetButton.addEventListener('click', resetBoard);
+
     const showMessage = (message) => {
-      messageBody = document.querySelector('.game-over');
-      messageBody.textContent = message;
+      p = document.createElement('p');
+      p.textContent = message;
+      p.classList.add('game-over-message');
+      messageBody.prepend(p);
       messageBody.classList.add('active');
-      document.querySelector('.board').classList.add('blur');
+      board.classList.add('blur');
     }
     return { updateBoard, showMessage };
   })();
@@ -176,11 +198,26 @@ const TicTacToe = ((px, po) => {
   const resetGame = () => {
     gameboard.resetBoard()
     round = 0
+    gameOver = false
   }
 
   return { runGame, resetGame }
 });
 
-const px = Player('Dia', 'X'), po = Player('Nuery', 'O');
-const game = TicTacToe(px, po);
-// game.resetGame();
+const Init = (() => {
+  const form = document.querySelector('#form');
+  const startButton = document.querySelector('#form button');
+  const xPlayer = document.querySelector('#x-player');
+  const oPlayer = document.querySelector('#o-player');
+
+  const startGame = () => {
+    form.style.display = 'none';
+    let px = Player(xPlayer.value, 'X'), po = Player(oPlayer.value, 'O');
+    TicTacToe(px, po);
+  }
+
+  startButton.addEventListener('click', startGame);
+})();
+
+
+// const game = TicTacToe(px, po);
