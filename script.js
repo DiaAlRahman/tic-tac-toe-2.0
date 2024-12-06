@@ -116,9 +116,8 @@ const TicTacToe = ((px, po) => {
     return { findWinner, checkDraw, resetBoard, updateBoard, showBoard }
   })(px, po);
   const displayController = (() => {
-    // console.log('in')
     tiles = document.querySelectorAll('.tile')
-    // console.log(tiles)
+    // getPosition of tile
     for (let i = 0; i < tiles.length; i++) {
       tiles[i].addEventListener('click', () => {
         runGame(i);
@@ -132,6 +131,10 @@ const TicTacToe = ((px, po) => {
       } else if (symbol === 'O') {
         tiles[i].style.backgroundImage = "url(./images/otop128px.png)";
       }
+    };
+
+    const showMessage = () => {
+
     }
     return { updateBoard };
   })();
@@ -143,8 +146,11 @@ const TicTacToe = ((px, po) => {
     let isUpdate = false, player;
     if (round % 2 == 0) { player = px; } else { player = po; };
     isUpdate = gameboard.updateBoard(i, player);
-    displayController.updateBoard(i, player.symbol);
-    if (isUpdate) { round++; }
+
+    if (isUpdate) {
+      round++;
+      displayController.updateBoard(i, player.symbol);
+    }
 
     console.log(gameboard.showBoard());
 
