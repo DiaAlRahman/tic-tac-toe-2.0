@@ -75,7 +75,7 @@ textarea:not([rows]) {
 body {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
   background-color: blanchedalmond;
 }
 
@@ -83,7 +83,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 128px);
   grid-template-rows: repeat(3, 128px);
-  /* margin: 10px; */
+  margin-top: 8rem;
   /* gap: 10px; */
   border: 1px solid white;
   background-color: black;

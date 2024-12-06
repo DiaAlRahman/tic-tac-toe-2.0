@@ -123,31 +123,42 @@ const TicTacToe = ((px, po) => {
       tiles[i].addEventListener('click', () => {
         runGame(i);
       });
+    };
 
-
-
-      // return { getPosition };
+    const updateBoard = (i, symbol) => {
+      if (symbol == 'X') {
+        tiles[i].style.backgroundImage = "url(./images/xtop128px.png)";
+        // tiles[i].style.border = '1000px solid white'
+      } else if (symbol === 'O') {
+        tiles[i].style.backgroundImage = "url(./images/otop128px.png)";
+      }
     }
+    return { updateBoard };
   })();
 
-  let round = 0
+  let round = 0, gameOver = false;
   const runGame = (i) => {
-    let isUpdate = false;
-    if (round % 2 == 0) {
-      isUpdate = gameboard.updateBoard(i, px);
-    } else {
-      isUpdate = gameboard.updateBoard(i, po);
-    };
+    if (gameOver) { return; }
+
+    let isUpdate = false, player;
+    if (round % 2 == 0) { player = px; } else { player = po; };
+    isUpdate = gameboard.updateBoard(i, player);
+    displayController.updateBoard(i, player.symbol);
     if (isUpdate) { round++; }
+
     console.log(gameboard.showBoard());
+
     winner = gameboard.findWinner()
     if (winner !== null) {
       console.log(winner.name + ' wins!');
+      gameOver = true
     } else {
       if (gameboard.checkDraw()) {
         console.log("Draw!");
+        gameOver = true
       };
     };
+
   };
   // console.log(gameboard.checkDraw())
   const resetGame = () => {
