@@ -114,6 +114,7 @@ const TicTacToe = ((px, po) => {
 
     return { findWinner, checkDraw, resetBoard, updateBoard, showBoard }
   })(px, po);
+
   const displayController = (() => {
     const tiles = document.querySelectorAll('.tile');
     const messageBody = document.querySelector('.game-over');
@@ -130,9 +131,8 @@ const TicTacToe = ((px, po) => {
 
     // getPosition of tile
     for (let i = 0; i < tiles.length; i++) {
-      tiles[i].addEventListener('click', () => {
-        runGame(i);
-      });
+      tiles[i].addEventListener('click', startGame);
+      tiles[i].position = i;
     };
 
     const updateBoard = (i, symbol) => {
@@ -159,7 +159,7 @@ const TicTacToe = ((px, po) => {
     resetButton.addEventListener('click', resetBoard);
 
     const showMessage = (message) => {
-      p = document.createElement('p');
+      let p = document.createElement('p');
       p.textContent = message;
       p.classList.add('game-over-message');
       messageBody.prepend(p);
@@ -168,13 +168,21 @@ const TicTacToe = ((px, po) => {
     };
 
     const restartGame = () => {
-      displayController.resetBoard();
+      // removePlayers()
+      for (let i = 0; i < tiles.length; i++) {
+        tiles[i].removeEventListener('click', startGame);
+      };
+      displayController.resetBoard();  // resets the game as well
       board.classList.remove('activate-board');
       restartButton.classList.remove('activate-restart');
       form.classList.remove('hide');
       form.classList.add('activate-general');
     };
     restartButton.addEventListener('click', restartGame);
+
+    function startGame(e) {
+      runGame(e.currentTarget.position);
+    }
 
     return { updateBoard, resetBoard, showMessage };
   })();
@@ -197,16 +205,21 @@ const TicTacToe = ((px, po) => {
     // console.log(gameboard.showBoard());
 
     winner = gameboard.findWinner()
+
     if (winner !== null) {
       message = winner.name + ' wins!';
       gameOver = true
+      // console.log(winner)
     } else {
       if (gameboard.checkDraw()) {
         message = "Draw!";
         gameOver = true
       };
     };
-    if (gameOver) { displayController.showMessage(message); }
+    if (gameOver) {
+      // console.log(message);
+      displayController.showMessage(message);
+    }
 
   };
   // console.log(gameboard.checkDraw())
@@ -216,6 +229,12 @@ const TicTacToe = ((px, po) => {
     gameOver = false
   };
 
+  // const removePlayers = () => {
+  //   px = null;
+  //   po = null;
+  // }
+
+
   return { runGame, resetGame }
 });
 
@@ -223,6 +242,8 @@ const Init = (() => {
   const startButton = document.querySelector('#form button');
   const xPlayer = document.querySelector('#x-player');
   const oPlayer = document.querySelector('#o-player');
+  let game;
+  // console.log(game)
 
   const getPlayerNames = () => {
     let namex = 'Joe', nameo = 'Mama';
@@ -233,10 +254,16 @@ const Init = (() => {
   }
 
   const startGame = () => {
+    if (game) {
+      console.log(game)
+      game = null;
+    }
     names = getPlayerNames()
     let px = Player(names[0], 'X'), po = Player(names[1], 'O');
-    TicTacToe(px, po);
+    game = TicTacToe(px, po);
   }
 
   startButton.addEventListener('click', startGame);
+
+  return { startGame }
 })();
