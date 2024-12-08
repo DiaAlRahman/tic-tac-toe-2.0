@@ -181,10 +181,6 @@ const TicTacToe = ((px, po) => {
     };
     restartButton.addEventListener('click', restartGame);
 
-    function startGame(e) {
-      runGame(e.currentTarget.position);
-    }
-
     return { updateBoard, resetBoard, showMessage };
   })();
 
@@ -230,13 +226,14 @@ const TicTacToe = ((px, po) => {
     gameOver = false
   };
 
+  function startGame(e) {
+    runGame(e.currentTarget.position);
+  };
+
   // const removePlayers = () => {
   //   px = null;
   //   po = null;
   // }
-
-
-  return { runGame, resetGame }
 });
 
 const Init = (() => {
