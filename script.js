@@ -167,6 +167,7 @@ const TicTacToe = ((px, po) => {
       board.classList.add('blur');
     };
 
+    // Remove event listener, i.e. delete entry point to a game instance
     const restartGame = () => {
       // removePlayers()
       for (let i = 0; i < tiles.length; i++) {
